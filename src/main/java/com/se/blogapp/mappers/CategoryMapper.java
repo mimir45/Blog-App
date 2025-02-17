@@ -1,6 +1,7 @@
 package com.se.blogapp.mappers;
 
 import com.se.blogapp.dto.CategoryDto;
+import com.se.blogapp.dto.CreatCategoryRequest;
 import com.se.blogapp.model.Category;
 import com.se.blogapp.model.Post;
 import com.se.blogapp.model.PostStatus;
@@ -23,5 +24,7 @@ public interface CategoryMapper {
                 .count();
 
     }
+
+    Category toEntity(CreatCategoryRequest request);
 
 }

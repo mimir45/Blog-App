@@ -4,12 +4,14 @@ import com.se.blogapp.dto.CategoryDto;
 import com.se.blogapp.dto.CreatCategoryRequest;
 import com.se.blogapp.model.Category;
 import com.se.blogapp.repository.CategoryRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CategoryService {
@@ -22,15 +24,26 @@ public class CategoryService {
     public List<Category>getAllCategories() {
         return categoryRepository.findAllWithPostCount();
     }
-    public Category createCategory(CreatCategoryRequest request) {
+
+    @Transactional
+    public Category createCategory(Category request) {
         Optional<Category> optionalCategory = categoryRepository.findByName(request.getName());
-        if (optionalCategory.isPresent()) {
-            throw new
-                    IllegalArgumentException("Category with name " + request.getName() + " already exists");
+        if (optionalCategory.isEmpty()) {
+           return categoryRepository.save(request);
         }
-        return categoryRepository.save(createCategory(request));
+
+        throw new RuntimeException("Category name already exists");
 
 
     }
 
+    public String deleteCategory(UUID id) {
+        Optional<Category> optionalCategory = categoryRepository.findById(id);
+        if (optionalCategory.isEmpty()) {
+            throw new RuntimeException("Category not found");
+        }
+         categoryRepository.delete(optionalCategory.get());
+        return "Category deleted";
+
+    }
 }
