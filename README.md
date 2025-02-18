@@ -27,6 +27,7 @@
 - Docker Compose
 - Lombok
 - Map Structure
+- Adminer
 
 ## Prerequisites
 
@@ -35,12 +36,12 @@
 ---
 
 ## Docker Run
-The application can be built and run by the `Docker` engine. The `Dockerfile` has multistage build, so you do not need to build and run separately.
+ The `Dockerfile` has multistage build, so you do not need to build and run separately.
 
 Please follow the below directions in order to build and run the application with Docker Compose;
 
 ```sh
-$ cd open-weather
+$ cd blogapp
 $ docker-compose up -d
 ```
 
